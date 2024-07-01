@@ -11,15 +11,36 @@
             align-items: center;
             height: 100vh;
             background-color: #000;
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
             margin: 0;
+            flex-direction: column;
         }
         canvas {
             border: 2px solid #fff;
         }
+        .title {
+            position: absolute;
+            top: 20px;
+            text-align: center;
+            font-size: 24px;
+            color: #fff;
+        }
+        .credit {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 14px;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
+    <div class="title">Ping Pong Game</div>
     <canvas id="pong" width="800" height="400"></canvas>
+    <div class="credit">By: <a href="https://yourwebsite.com" style="color: #fff; text-decoration: none;">Prince</a></div>
     <script src="script.js"></script>
 </body>
 </html>
+
