@@ -117,7 +117,7 @@ const update = () => {
         ball.velocityX = direction * ball.speed * Math.cos(angleRad);
         ball.velocityY = ball.speed * Math.sin(angleRad);
 
-        ball.speed += 0.1;
+        ball.speed += 0.5;
     }
 
     if (ball.x - ball.radius < 0) {
