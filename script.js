@@ -37,6 +37,13 @@ const ball = {
     color: "#05EDFF"
 };
 
+// AI error/miss settings for computer paddle
+computer.missChance = 0.15; // 15% chance to purposely miss when ball enters AI half
+computer.missOffset = 0; // persistent pixel offset applied to target
+computer.maxMissOffset = 120; // maximum pixels to miss by
+
+ball.prevX = ball.x; // track previous x to detect when ball enters computer half
+
 const drawRect = (x, y, w, h, color) => {
     context.fillStyle = color;
     context.fillRect(x, y, w, h);
@@ -120,8 +127,23 @@ const update = () => {
         user.score++;
         resetBall();
     }
+    // Decide a persistent miss offset when the ball first enters the computer's half
+    if (ball.x > canvas.width / 2 && ball.prevX <= canvas.width / 2 && ball.velocityX > 0) {
+        if (Math.random() < computer.missChance) {
+            // choose a random offset to miss by (positive or negative)
+            let sign = Math.random() < 0.5 ? -1 : 1;
+            computer.missOffset = sign * (Math.random() * computer.maxMissOffset);
+        } else {
+            computer.missOffset = 0;
+        }
+    }
 
-    computer.y += ((ball.y - (computer.y + computer.height / 2))) * 0.1;
+    // target is ball y plus any persistent miss offset
+    let targetY = ball.y + computer.missOffset;
+    computer.y += ((targetY - (computer.y + computer.height / 2))) * 0.1;
+
+    // save previous x for next frame
+    ball.prevX = ball.x;
 };
 
 const game = () => {
